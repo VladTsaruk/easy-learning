@@ -18,6 +18,23 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Create env file
+        shell: powershell
+        env:
+          ENV_FILE: ${{ secrets.ENV_FILE }}
+        run: |
+          if (-not [string]::IsNullOrWhiteSpace($env:ENV_FILE)) {
+            $env:ENV_FILE | Out-File -FilePath .env -Encoding utf8 -NoNewline
+            Write-Host ".env created from GitHub secret ENV_FILE."
+          }
+          elseif (Test-Path .env.example) {
+            Copy-Item .env.example .env
+            Write-Host ".env created from .env.example."
+          }
+          else {
+            throw "No ENV_FILE secret or .env.example file found."
+          }
+
       - name: Deploy
         shell: powershell
         env:
