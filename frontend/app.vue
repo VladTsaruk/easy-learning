@@ -41,7 +41,7 @@ async function loadGreeting() {
         :disabled="loading"
         @click="loadGreeting"
       >
-        {{ loading ? "Відправляю..." : "Отримати повідомлення" }}
+        {{ loading ? "Відправляю..." : "Отримати повідомлення - тест деплоя" }}
       </button>
 
       <p
